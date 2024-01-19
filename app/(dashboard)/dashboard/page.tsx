@@ -37,57 +37,57 @@ export default function page() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
+                  <CardTitle className="text-md font-medium">
                     Total Calls
                   </CardTitle>
                   <Icons.phoneIncoming className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">702</div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-md text-muted-foreground">
                     Total calls received this month
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
+                  <CardTitle className="text-md font-medium">
                     Automated Calls
                   </CardTitle>
                   <Icons.bot className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">394</div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-md text-muted-foreground">
                     56.13% of total calls
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
+                  <CardTitle className="text-md font-medium">
                     Calls Transfered
                   </CardTitle>
                   <Icons.phoneForward className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">308</div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-md text-muted-foreground">
                     43.87% of total calls
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
+                  <CardTitle className="text-md font-medium">
                     Cost Savings
                   </CardTitle>
                   <Icons.dollar className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">$591</div>
-                  <p className="text-xs text-muted-foreground">
-                    Based on average call statistics
+                  <p className="text-md text-muted-foreground">
+                    You saved this much
                   </p>
                 </CardContent>
               </Card>
@@ -95,7 +95,7 @@ export default function page() {
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
               <Card className="col-span-4">
                 <CardHeader>
-                  <CardTitle>Overview</CardTitle>
+                  <CardTitle>Overview - Calls Weekly</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
                   <Overview />
