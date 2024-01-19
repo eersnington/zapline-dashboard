@@ -22,8 +22,8 @@ export default function AuthenticationPage() {
         Login
       </Link>
       <div className="relative hidden h-full justify-center items-center flex-col bg-muted p-10 text-white dark:border-r lg:flex bg-zinc-900">
-        <h1 className="font-bold text-4xl">ZaplineAI</h1>
-        <p className="text-md mt-2 text-slate-200">
+        <h1 className="font-bold text-6xl">ZaplineAI</h1>
+        <p className="text-lg mt-2 text-slate-200">
           Within a few clicks, setup your very own AI-driven call support.
         </p>
       </div>

@@ -15,11 +15,11 @@ export default function GoogleSignInButton() {
       variant="outline"
       type="button"
       onClick={() =>
-        signIn("github", { callbackUrl: callbackUrl ?? "/dashboard" })
+        signIn("google", { callbackUrl: callbackUrl ?? "/dashboard" })
       }
     >
-      <Icons.gitHub className="mr-2 h-4 w-4" />
-      Continue with Github
+      <Icons.google className="h-4 w-4 mx-4" />
+      <p className="mx-1">Continue with Google</p>
     </Button>
   );
 }
