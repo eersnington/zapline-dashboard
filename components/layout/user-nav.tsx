@@ -11,20 +11,21 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut, useSession } from "next-auth/react";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
 export function UserNav() {
-  const { data: session } = useSession();
-  if (session) {
+  const { user } = useKindeBrowserClient();
+  if (user) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={session.user?.image ?? ""}
-                alt={session.user?.name ?? ""}
-              />
-              <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
+            <Avatar className="h-9 w-9">
+              <AvatarImage src="" alt="Avatar" />
+              <AvatarFallback>
+                {user.given_name ? user.given_name[0] : "Null"}
+              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -32,10 +33,10 @@ export function UserNav() {
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">
-                {session.user?.name}
+                {user.given_name ?? ""} {user.family_name ?? ""}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                {session.user?.email}
+                {user.email ?? ""}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -56,8 +57,8 @@ export function UserNav() {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => signOut()}>
-            Log out
+          <DropdownMenuItem onClick={() => {}}>
+            <LogoutLink>Log out</LogoutLink>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
