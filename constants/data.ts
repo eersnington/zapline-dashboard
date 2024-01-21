@@ -126,7 +126,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: "Call Archive",
-    href: "/dashboard/employee",
+    href: "/dashboard/archive",
     icon: "callArchive",
     label: "archive",
   },
