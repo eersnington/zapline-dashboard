@@ -9,7 +9,9 @@ import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-const breadcrumbItems = [{ title: "Employee", link: "/dashboard/employee" }];
+const breadcrumbItems = [
+  { title: "Call Archive", link: "/dashboard/employee" },
+];
 
 type paramsProps = {
   searchParams: {
@@ -38,16 +40,9 @@ export default async function page({ searchParams }: paramsProps) {
 
         <div className="flex items-start justify-between">
           <Heading
-            title={`Employee (${totalUsers})`}
-            description="Manage employees (Server side table functionalities.)"
+            title={`Call Archive (${totalUsers})`}
+            description="View all calls made by your bot."
           />
-
-          <Link
-            href={"/dashboard/employee/new"}
-            className={cn(buttonVariants({ variant: "default" }))}
-          >
-            <Plus className="mr-2 h-4 w-4" /> Add New
-          </Link>
         </div>
         <Separator />
 
