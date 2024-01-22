@@ -35,7 +35,7 @@ export default async function page({ searchParams }: paramsProps) {
         <div className="flex items-start justify-between">
           <Heading
             title={`Call Archive (${totalUsers})`}
-            description="View all calls made by your bot."
+            description="View all calls made by your bot. *Coming Soon*"
           />
         </div>
         <Separator />

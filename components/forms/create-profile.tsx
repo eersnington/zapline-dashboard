@@ -18,24 +18,42 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { profileSchema, type ProfileFormValues } from "@/lib/form-schema";
+import { UserProfileSchema } from "@/lib/function-schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface CreateProfileFormProps {
   createProfile: (data: ProfileFormValues) => Promise<null>;
+  defaultValues?: Partial<UserProfileSchema>;
 }
 
 export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
   createProfile,
+  defaultValues = {},
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
 
+  const mapUserProfileToDefaultValues = (
+    profile: CreateProfileFormProps["defaultValues"],
+  ): Partial<ProfileFormValues> => {
+    if (profile) {
+      return {
+        brandname: profile.brandname,
+        website: profile.website,
+        email: profile.email,
+        type: profile.type,
+      };
+    }
+    return {};
+  };
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     mode: "onChange",
+    defaultValues: mapUserProfileToDefaultValues(defaultValues),
   });
 
   const processForm: SubmitHandler<ProfileFormValues> = (data) => {

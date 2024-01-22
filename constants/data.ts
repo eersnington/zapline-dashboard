@@ -1,4 +1,3 @@
-import { Icons } from "@/components/icons";
 import { NavItem, SidebarNavItem } from "@/types";
 
 export type User = {
@@ -119,10 +118,10 @@ export const navItems: NavItem[] = [
     label: "Dashboard",
   },
   {
-    title: "Profile",
-    href: "/dashboard/profile",
-    icon: "profile",
-    label: "profile",
+    title: "Config",
+    href: "/dashboard/config",
+    icon: "settings",
+    label: "config",
   },
   {
     title: "Call Archive",

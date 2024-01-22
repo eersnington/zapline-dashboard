@@ -22,21 +22,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { UserConfigSchema } from "@/lib/function-schema";
 
 interface CreateBotFormProps {
   createConfig: (data: BotConfigFormValues) => Promise<null>;
+  defaultValues?: Partial<UserConfigSchema>;
 }
 
 export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
   createConfig,
+  defaultValues = {},
 }) => {
-  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
+
+  const mapUserConfigToDefaultValues = (
+    config: CreateBotFormProps["defaultValues"],
+  ): Partial<BotConfigFormValues> => {
+    if (config) {
+      const fallbackMode =
+        config.fallbackMode === "enabled" || config.fallbackMode === "disabled"
+          ? config.fallbackMode
+          : undefined;
+
+      const fallbackEmail = config.fallbackEmail || undefined;
+
+      return {
+        fallbackMode: fallbackMode,
+        fallbackEmail: fallbackEmail,
+        transferNumber: config.transferNumber,
+      };
+    }
+    return {};
+  };
 
   const form = useForm<BotConfigFormValues>({
     resolver: zodResolver(botConfigSchema),
     mode: "onChange",
+    defaultValues: mapUserConfigToDefaultValues(defaultValues),
   });
 
   const processForm: SubmitHandler<BotConfigFormValues> = (data) => {
@@ -260,7 +283,9 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
               />
             </svg>
           </button>
-          <p className="m-2 text-sm text-muted-foreground">Click here to Submit</p>
+          <p className="m-2 text-sm text-muted-foreground">
+            Click here to Submit
+          </p>
         </div>
       </div>
     </>
