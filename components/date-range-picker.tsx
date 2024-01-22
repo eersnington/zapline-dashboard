@@ -8,17 +8,12 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
 import * as React from "react";
 
-export function CalendarDatePicker({
+export function CalendarDateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const currentDate = new Date();
-
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    currentDate,
-  );
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -27,17 +22,10 @@ export function CalendarDatePicker({
           <Button
             id="date"
             variant={"outline"}
-            className={cn(
-              "w-[260px] justify-start text-left font-normal",
-              !selectedDate && "text-muted-foreground",
-            )}
+            className={cn("w-[260px] text-center font-normal")}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {selectedDate ? (
-              format(selectedDate, "LLL dd, y")
-            ) : (
-              <span>Pick a date</span>
-            )}
+            {currentDate.toDateString()}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="end">
@@ -45,8 +33,8 @@ export function CalendarDatePicker({
             initialFocus
             mode="single"
             defaultMonth={currentDate}
-            selected={selectedDate}
-            onSelect={setSelectedDate}
+            selected={currentDate}
+            onSelect={() => {}}
           />
         </PopoverContent>
       </Popover>
