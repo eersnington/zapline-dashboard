@@ -39,7 +39,6 @@ export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
   });
 
   const processForm: SubmitHandler<ProfileFormValues> = (data) => {
-    console.log("data ==>", data);
     setData(data);
     // api call and reset
     // form.reset();
@@ -220,7 +219,7 @@ export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
             )}
             {currentStep === 1 && (
               <div>
-                <h1>Completed</h1>
+                <h1 className="font-bold text-green-600">Completed</h1>
                 <pre className="whitespace-pre-wrap">
                   {data &&
                   typeof data === "object" &&
@@ -241,7 +240,7 @@ export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
       </Form>
       {/* Navigation */}
       <div className="mt-8 pt-5">
-        <div className="flex justify-between">
+        <div className="flex">
           <button
             type="button"
             onClick={next}
@@ -263,6 +262,9 @@ export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
               />
             </svg>
           </button>
+          <p className="m-2 text-sm text-muted-foreground">
+            Click here to Submit
+          </p>
         </div>
       </div>
     </>

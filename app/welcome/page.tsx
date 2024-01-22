@@ -1,6 +1,6 @@
 import { CreateBotConfig } from "@/components/forms/create-bot-config";
 import { CreateProfileOne } from "@/components/forms/create-profile";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
@@ -35,18 +35,22 @@ export default async function page() {
   }
 
   async function createProfile(data: ProfileFormValues) {
-    "use server"; // mark function as a server action
+    "use server";
     try {
-      db.profile.create({
-        data: {
-          ...data,
-          user: {
-            connect: {
-              id: user?.id,
+      await db.profile
+        .create({
+          data: {
+            ...data,
+            user: {
+              connect: {
+                id: user?.id,
+              },
             },
           },
-        },
-      });
+        })
+        .then((res) => {
+          console.log(res);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -54,18 +58,22 @@ export default async function page() {
   }
 
   async function createConfig(data: BotConfigFormValues) {
-    "use server"; // mark function as a server action
+    "use server";
     try {
-      db.config.create({
-        data: {
-          ...data,
-          user: {
-            connect: {
-              id: user?.id,
+      await db.config
+        .create({
+          data: {
+            ...data,
+            user: {
+              connect: {
+                id: user?.id,
+              },
             },
           },
-        },
-      });
+        })
+        .then((res) => {
+          console.log(res);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +81,7 @@ export default async function page() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen overflow-auto">
+    <>
       <div className="space-y-4 p-4 md:p-8 pt-6">
         <div className="flex items-start justify-between">
           <Heading
@@ -107,15 +115,20 @@ export default async function page() {
           </p>
           <Separator />
           <CreateBotConfig createConfig={createConfig} />
-
+          <Separator />
+          <p className="text-foreground text-md">
+            Once you've completed the form, you can start using the bot.{" "}
+          </p>
           <Link
-            className={buttonVariants({ variant: "default" })}
-            href="/dashboard/plan"
+            className={buttonVariants({
+              variant: "default",
+            })}
+            href="/dashboard/"
           >
             Get Started
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 }

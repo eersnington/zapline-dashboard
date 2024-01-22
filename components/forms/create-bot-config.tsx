@@ -40,7 +40,6 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
   });
 
   const processForm: SubmitHandler<BotConfigFormValues> = (data) => {
-    console.log("data ==>", data);
     setData(data);
     // api call and reset
     // form.reset();
@@ -217,7 +216,7 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
             )}
             {currentStep === 1 && (
               <div>
-                <h1>Completed</h1>
+                <h1 className="font-bold text-green-600">Completed</h1>
                 <pre className="whitespace-pre-wrap">
                   {data &&
                   typeof data === "object" &&
@@ -239,7 +238,7 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
 
       {/* Navigation */}
       <div className="mt-8 pt-5">
-        <div className="flex justify-between">
+        <div className="flex">
           <button
             type="button"
             onClick={next}
@@ -261,6 +260,7 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
               />
             </svg>
           </button>
+          <p className="m-2 text-sm text-muted-foreground">Click here to Submit</p>
         </div>
       </div>
     </>
