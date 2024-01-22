@@ -12,11 +12,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from "@/components/icons";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export default async function page() {
-  const { getUser } = getKindeServerSession();
-
+export default function page() {
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -74,23 +71,23 @@ export default async function page() {
                   <Icons.phoneForward className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">308</div>
+                  <div className="text-2xl font-bold">282</div>
                   <p className="text-md text-muted-foreground">
-                    43.87% of total calls
+                    40.17% of total calls
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-md font-medium">
-                    Cost Savings
+                    Calls Abandoned
                   </CardTitle>
                   <Icons.dollar className="h-5 w-5 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">$591</div>
+                  <div className="text-2xl font-bold">26</div>
                   <p className="text-md text-muted-foreground">
-                    You saved this much
+                    3.70% of total calls
                   </p>
                 </CardContent>
               </Card>

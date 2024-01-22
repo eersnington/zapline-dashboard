@@ -1,11 +1,5 @@
 "use client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -14,7 +8,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -27,84 +20,30 @@ import { Separator } from "@/components/ui/separator";
 import { profileSchema, type ProfileFormValues } from "@/lib/form-schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
-interface ProfileFormType {
-  initialData: any | null;
-  categories: any;
+interface CreateProfileFormProps {
+  createProfile: (data: ProfileFormValues) => Promise<null>;
 }
 
-export const CreateProfileOne: React.FC<ProfileFormType> = ({
-  initialData,
-  categories,
+export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
+  createProfile,
 }) => {
-  const params = useParams();
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [imgLoading, setImgLoading] = useState(false);
-  const title = initialData ? "Edit product" : "Create Your Profile";
-  const description = initialData
-    ? "Edit a product."
-    : "Create your profile to get started with setting up your own Incoming Call Bot.";
-  const toastMessage = initialData ? "Product updated." : "Product created.";
-  const action = initialData ? "Save changes" : "Create";
-  const [previousStep, setPreviousStep] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
-  const delta = currentStep - previousStep;
-
-  const { user } = useKindeBrowserClient();
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     mode: "onChange",
   });
 
-  const {
-    control,
-    formState: { errors },
-  } = form;
-
-  const onSubmit = async (data: ProfileFormValues) => {
-    try {
-      setLoading(true);
-      if (initialData) {
-        // await axios.post(`/api/products/edit-product/${initialData._id}`, data);
-      } else {
-        // const res = await axios.post(`/api/products/create-product`, data);
-        // console.log("product", res);
-      }
-      router.refresh();
-      router.push(`/dashboard/products`);
-    } catch (error: any) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const onDelete = async () => {
-    try {
-      setLoading(true);
-      //   await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
-      router.refresh();
-      router.push(`/${params.storeId}/products`);
-    } catch (error: any) {
-    } finally {
-      setLoading(false);
-      setOpen(false);
-    }
-  };
-
   const processForm: SubmitHandler<ProfileFormValues> = (data) => {
     console.log("data ==>", data);
     setData(data);
     // api call and reset
     // form.reset();
+    createProfile(data);
   };
 
   type FieldName = keyof ProfileFormValues;
@@ -115,12 +54,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
       name: "Business Information",
       fields: ["brandname", "website", "type", "email"],
     },
-    {
-      id: "Step 2",
-      name: "Bot Configuration",
-      fields: ["brandname", "website"],
-    },
-    { id: "Step 3", name: "Complete" },
+    { id: "Step 2", name: "Complete" },
   ];
 
   const next = async () => {
@@ -136,40 +70,20 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
       if (currentStep === steps.length - 2) {
         await form.handleSubmit(processForm)();
       }
-      setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
     }
   };
 
-  const prev = () => {
-    if (currentStep > 0) {
-      setPreviousStep(currentStep);
-      setCurrentStep((step) => step - 1);
-    }
-  };
-
   const categoriesList = [
-    { id: "1", name: "E-Commerce" },
-    { id: "2", name: "Other" },
+    { id: "e-commerce", name: "E-Commerce" },
+    { id: "other", name: "Other" },
   ];
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <Heading title={title} description={description} />
-        {initialData && (
-          <Button
-            disabled={loading}
-            variant="destructive"
-            size="sm"
-            onClick={() => setOpen(true)}
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
       <Separator />
       <div>
+        {/* Form Progress Bar */}
         <ul className="flex gap-4">
           {steps.map((step, index) => (
             <li key={step.name} className="md:flex-1">
@@ -203,6 +117,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
         </ul>
       </div>
       <Separator />
+      {/* Form */}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(processForm)}
@@ -225,7 +140,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                       <FormLabel>Brand Name</FormLabel>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={false}
                           placeholder="Clothing Store"
                           {...field}
                         />
@@ -242,7 +157,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                       <FormLabel>Website</FormLabel>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={false}
                           placeholder="https://clothing.store"
                           {...field}
                         />
@@ -259,7 +174,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                       <FormLabel>Contact Email</FormLabel>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={false}
                           placeholder="support@clothing.store"
                           {...field}
                         />
@@ -275,7 +190,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     <FormItem>
                       <FormLabel>Category</FormLabel>
                       <Select
-                        disabled={loading}
+                        disabled={false}
                         onValueChange={field.onChange}
                         value={field.value}
                         defaultValue={field.value}
@@ -304,82 +219,29 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
               </>
             )}
             {currentStep === 1 && (
-              <>
-                <FormField
-                  control={form.control}
-                  name="brandname2"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Brand Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="Clothing Store"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="website2"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Website Link</FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="www dot clothing dot store"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </>
-            )}
-            {currentStep === 2 && (
               <div>
                 <h1>Completed</h1>
                 <pre className="whitespace-pre-wrap">
-                  {JSON.stringify(data)}
+                  {data &&
+                  typeof data === "object" &&
+                  Object.keys(data).length > 0 ? (
+                    Object.entries(data).map(([key, value]) => (
+                      <p key={key}>
+                        <strong>{key}:</strong> {value}
+                      </p>
+                    ))
+                  ) : (
+                    <p>No data available.</p>
+                  )}
                 </pre>
               </div>
             )}
           </div>
-
-          {/* <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button> */}
         </form>
       </Form>
       {/* Navigation */}
       <div className="mt-8 pt-5">
         <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={prev}
-            disabled={currentStep === 0}
-            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
-          </button>
           <button
             type="button"
             onClick={next}

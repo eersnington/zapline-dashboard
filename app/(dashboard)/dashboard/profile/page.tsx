@@ -1,5 +1,5 @@
 import BreadCrumb from "@/components/breadcrumb";
-import { CreateProfileOne } from "@/components/forms/user-profile-stepper/create-profile";
+import { CreateProfileOne } from "@/components/forms/create-profile";
 
 const breadcrumbItems = [{ title: "Profile", link: "/dashboard/profile" }];
 export default function page() {
