@@ -16,12 +16,21 @@ export const profileSchema = z.object({
     .string()
     .email({ message: "Invalid email address - support@clothing.store" }),
   type: z.string().min(1, { message: "Please select a category" }),
-  brandname2: z
+});
+
+export const botConfigSchema = z.object({
+  transferNumber: z
     .string()
-    .min(3, { message: "Brand Name pronounced by the bot" }),
-  website2: z
+    .min(10, {
+      message: "Please enter a valid phone number - eg: +12642525299",
+    })
+    .nullable()
+    .optional(),
+  fallbackMode: z.enum(["enabled", "disabled"]),
+  fallbackEmail: z
     .string()
-    .min(3, { message: "Website Link pronounced by the bot" }),
+    .email({ message: "Invalid email address - eg: support@clothing.store" }),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;
+export type BotConfigFormValues = z.infer<typeof botConfigSchema>;

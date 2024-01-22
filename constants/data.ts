@@ -136,10 +136,4 @@ export const navItems: NavItem[] = [
     icon: "creditCard",
     label: "billing",
   },
-  {
-    title: "Kanban",
-    href: "/dashboard/kanban",
-    icon: "kanban",
-    label: "kanban",
-  },
 ];
