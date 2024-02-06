@@ -5,9 +5,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CreateProfileOne } from "@/components/forms/create-profile-form";
+import { CreateProfileForm } from "@/components/forms/create-profile-form";
 import { ConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
-import { CreateBotConfig } from "@/components/forms/create-config-form";
+import { CreateBotConfigForm } from "@/components/forms/create-config-form";
 
 const breadcrumbItems = [{ title: "Config", link: "/dashboard/config" }];
 export default async function page() {
@@ -100,7 +100,7 @@ export default async function page() {
         <h1 className="text-foreground font-bold text-lg my-2">
           Brand Information
         </h1>
-        <CreateProfileOne
+        <CreateProfileForm
           createProfile={createProfile}
           defaultValues={userProfile}
         />
@@ -108,7 +108,7 @@ export default async function page() {
         <h1 className="text-foreground font-bold text-lg my-2">
           Bot Information
         </h1>
-        <CreateBotConfig
+        <CreateBotConfigForm
           createConfig={createConfig}
           defaultValues={userConfig}
         />

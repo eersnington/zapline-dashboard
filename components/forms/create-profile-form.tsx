@@ -29,7 +29,7 @@ interface CreateProfileFormProps {
   defaultValues?: Partial<UserProfileSchema>;
 }
 
-export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
+export const CreateProfileForm: React.FC<CreateProfileFormProps> = ({
   createProfile,
   defaultValues = {},
 }) => {

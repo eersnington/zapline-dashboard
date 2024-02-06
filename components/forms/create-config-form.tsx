@@ -29,7 +29,7 @@ interface CreateConfigFormProps {
   defaultValues?: Partial<UserConfigSchema>;
 }
 
-export const CreateBotConfig: React.FC<CreateConfigFormProps> = ({
+export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
   createConfig,
   defaultValues = {},
 }) => {
@@ -283,9 +283,7 @@ export const CreateBotConfig: React.FC<CreateConfigFormProps> = ({
               />
             </svg>
           </button>
-          <p className="m-2 text-sm text-foreground">
-            Click here to Submit
-          </p>
+          <p className="m-2 text-sm text-foreground">Click here to Submit</p>
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
-import { CreateBotConfig } from "@/components/forms/create-config-form";
-import { CreateProfileOne } from "@/components/forms/create-profile-form";
+import { CreateBotConfigForm } from "@/components/forms/create-config-form";
+import { CreateProfileForm } from "@/components/forms/create-profile-form";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
@@ -35,9 +35,10 @@ export default async function page() {
     });
 
     //create bot in db
-    Api.post("phone/buy", { user_id: new_user.id }).catch((err) => {
-      console.log(err);
-    });
+    Api.post("phone/buy", { user_id: new_user.id })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async function createProfile(data: ProfileFormValues) {
@@ -105,7 +106,7 @@ export default async function page() {
             support email. This information helps the bot tailor responses and
             enhance the user experience.
           </p>
-          <CreateProfileOne createProfile={createProfile} />
+          <CreateProfileForm createProfile={createProfile} />
           <Separator />
           <Heading title="Step 2 - Bot Configuration" description="" />
           <p className="text-foreground text-md">
@@ -120,7 +121,7 @@ export default async function page() {
             receive the voicemail transcriptions in such instances.{" "}
           </p>
           <Separator />
-          <CreateBotConfig createConfig={createConfig} />
+          <CreateBotConfigForm createConfig={createConfig} />
           <Separator />
           <p className="text-foreground text-md">
             Once you've completed the form, you can start using the bot.{" "}
