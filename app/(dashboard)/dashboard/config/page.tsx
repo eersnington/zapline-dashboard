@@ -5,9 +5,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CreateProfileOne } from "@/components/forms/create-profile";
-import { BotConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
-import { CreateBotConfig } from "@/components/forms/create-bot-config";
+import { CreateProfileOne } from "@/components/forms/create-profile-form";
+import { ConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
+import { CreateBotConfig } from "@/components/forms/create-config-form";
 
 const breadcrumbItems = [{ title: "Config", link: "/dashboard/config" }];
 export default async function page() {
@@ -58,7 +58,7 @@ export default async function page() {
     }
     return null;
   }
-  async function createConfig(data: BotConfigFormValues) {
+  async function createConfig(data: ConfigFormValues) {
     "use server";
     try {
       await db.config

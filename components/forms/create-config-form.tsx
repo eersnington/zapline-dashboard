@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { botConfigSchema, type BotConfigFormValues } from "@/lib/form-schema";
+import { configSchema, type ConfigFormValues } from "@/lib/form-schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -24,12 +24,12 @@ import {
 } from "../ui/select";
 import { UserConfigSchema } from "@/lib/function-schema";
 
-interface CreateBotFormProps {
-  createConfig: (data: BotConfigFormValues) => Promise<null>;
+interface CreateConfigFormProps {
+  createConfig: (data: ConfigFormValues) => Promise<null>;
   defaultValues?: Partial<UserConfigSchema>;
 }
 
-export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
+export const CreateBotConfig: React.FC<CreateConfigFormProps> = ({
   createConfig,
   defaultValues = {},
 }) => {
@@ -37,8 +37,8 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
   const [data, setData] = useState({});
 
   const mapUserConfigToDefaultValues = (
-    config: CreateBotFormProps["defaultValues"],
-  ): Partial<BotConfigFormValues> => {
+    config: CreateConfigFormProps["defaultValues"],
+  ): Partial<ConfigFormValues> => {
     if (config) {
       const fallbackMode =
         config.fallbackMode === "enabled" || config.fallbackMode === "disabled"
@@ -56,13 +56,13 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
     return {};
   };
 
-  const form = useForm<BotConfigFormValues>({
-    resolver: zodResolver(botConfigSchema),
+  const form = useForm<ConfigFormValues>({
+    resolver: zodResolver(configSchema),
     mode: "onChange",
     defaultValues: mapUserConfigToDefaultValues(defaultValues),
   });
 
-  const processForm: SubmitHandler<BotConfigFormValues> = (data) => {
+  const processForm: SubmitHandler<ConfigFormValues> = (data) => {
     setData(data);
     // api call and reset
     // form.reset();
@@ -71,7 +71,7 @@ export const CreateBotConfig: React.FC<CreateBotFormProps> = ({
 
   console.log(JSON.stringify(form.watch(), null, 2));
 
-  type FieldName = keyof BotConfigFormValues;
+  type FieldName = keyof ConfigFormValues;
 
   const steps = [
     {

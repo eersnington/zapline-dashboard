@@ -18,7 +18,7 @@ export const profileSchema = z.object({
   type: z.string().min(1, { message: "Please select a category" }),
 });
 
-export const botConfigSchema = z.object({
+export const configSchema = z.object({
   transferNumber: z
     .string()
     .min(10, {
@@ -33,4 +33,4 @@ export const botConfigSchema = z.object({
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;
-export type BotConfigFormValues = z.infer<typeof botConfigSchema>;
+export type ConfigFormValues = z.infer<typeof configSchema>;

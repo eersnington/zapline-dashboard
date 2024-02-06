@@ -1,5 +1,5 @@
-import { CreateBotConfig } from "@/components/forms/create-bot-config";
-import { CreateProfileOne } from "@/components/forms/create-profile";
+import { CreateBotConfig } from "@/components/forms/create-config-form";
+import { CreateProfileOne } from "@/components/forms/create-profile-form";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
