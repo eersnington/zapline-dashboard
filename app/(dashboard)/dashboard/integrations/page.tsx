@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const breadcrumbItems = [{ title: "Config", link: "/dashboard/config" }];
+const breadcrumbItems = [{ title: "Integrations", link: "/dashboard/integrations" }];
 export default async function page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -21,14 +21,13 @@ export default async function page() {
     },
   });
 
-  const userConfig = await db.config.findFirst({
+  const userBot = await db.bot.findFirst({
     where: {
       userId: user?.id,
     },
   });
 
-  async function getNumber() {}
-  async function createConfig() {}
+  async function updateBot() {}
 
   return (
     <ScrollArea className="h-full">
@@ -41,7 +40,7 @@ export default async function page() {
         <Separator />
 
         <h1 className="text-foreground font-bold text-lg my-2">
-          Brand Information
+          Shopify Information
         </h1>
       </div>
     </ScrollArea>

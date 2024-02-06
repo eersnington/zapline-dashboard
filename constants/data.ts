@@ -124,6 +124,12 @@ export const navItems: NavItem[] = [
     label: "config",
   },
   {
+    title: "Integrations",
+    href: "/dashboard/integrations",
+    icon: "link",
+    label: "integrations",
+  },
+  {
     title: "Call Archive",
     href: "/dashboard/archive",
     icon: "callArchive",

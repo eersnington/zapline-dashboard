@@ -11,9 +11,34 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Icons } from "@/components/icons";
+import { Badge } from "@/components/ui/badge";
 
-export default function page() {
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Icons } from "@/components/icons";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
+
+export default async function page() {
+  const { getUser } = getKindeServerSession();
+
+  const kinde_user = await getUser();
+
+  const user = await db.user.findFirst({
+    where: {
+      id: kinde_user?.id,
+    },
+  });
+
+  if (user === null) {
+    redirect("/welcome");
+  }
+
+  const bot_phone_number = await db.bot.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -22,6 +47,10 @@ export default function page() {
             Hi, welcome back 👋
           </h2>
           <div className="hidden md:flex items-center space-x-2">
+            <Badge className="text-sm bg-orange-500 text-white">
+              Bot Phone Number: {bot_phone_number?.phone_no}
+            </Badge>
+
             <CalendarDateRangePicker />
             <Button>Download</Button>
           </div>
