@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const apiRequestValidator = z.object({
+export const apiRequestValidator = z.object({
   id: z.string(),
   name: z.string(),
 });
