@@ -21,5 +21,15 @@ export const UserConfig = z
   })
   .nullable();
 
+export const UserBot = z
+  .object({
+    myshopify: z.string(),
+    app_token: z.string(),
+    refund_accept: z.string(),
+    refund_window: z.string().nullable(),
+  })
+  .nullable();
+
 export type UserProfileSchema = z.infer<typeof UserProfile>;
 export type UserConfigSchema = z.infer<typeof UserConfig>;
+export type UserBotSchema = z.infer<typeof UserBot>;

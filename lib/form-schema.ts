@@ -32,5 +32,22 @@ export const configSchema = z.object({
     .email({ message: "Invalid email address - eg: support@clothing.store" }),
 });
 
+export const integrationSchema = z.object({
+  myshopify: z.string().refine(
+    (value) => {
+      const shopifyRegex = /^[a-zA-Z0-9-]+\.myshopify\.com$/;
+      return shopifyRegex.test(value);
+    },
+    {
+      message:
+        "Please provide your correct myshopify link - [your_store_name].myshopify.com",
+    },
+  ),
+  app_token: z.string().min(20, { message: "Please enter a valid API key" }),
+  refund_accept: z.enum(["enabled", "disabled"]),
+  refund_window: z.string().min(1, { message: "Please enter a valid number" }),
+});
+
 export type ProfileFormValues = z.infer<typeof profileSchema>;
 export type ConfigFormValues = z.infer<typeof configSchema>;
+export type IntegrationFormValues = z.infer<typeof integrationSchema>;
