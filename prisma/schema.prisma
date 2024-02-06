@@ -22,6 +22,7 @@ model User {
 
   profile Profile?
   config Config?
+  bot Bot?
 }
 
 model Profile {
@@ -43,4 +44,17 @@ model Config {
   transferNumber String? 
   fallbackMode String
   fallbackEmail String?
+}
+
+model Bot {
+  id       Int  @id @default(autoincrement())
+  userId   String  @unique
+  user     User    @relation(fields: [userId], references: [id])
+
+  phone_no String
+  myshopify String?
+  app_token String?
+
+  refund_accept String
+  refund_window String?
 }
