@@ -4,10 +4,11 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
-import { BotConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
+import { ConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Api } from "@/lib/api";
 
 export default async function page() {
   const { getUser } = getKindeServerSession();
@@ -26,11 +27,16 @@ export default async function page() {
 
   if (!dbUser) {
     // create user in db
-    await db.user.create({
+    const new_user = await db.user.create({
       data: {
         id: user.id,
         email: user.email,
       },
+    });
+
+    //create bot in db
+    Api.post("phone/buy", { user_id: new_user.id }).catch((err) => {
+      console.log(err);
     });
   }
 
@@ -57,7 +63,7 @@ export default async function page() {
     return null;
   }
 
-  async function createConfig(data: BotConfigFormValues) {
+  async function createConfig(data: ConfigFormValues) {
     "use server";
     try {
       await db.config

@@ -280,7 +280,7 @@ export const CreateProfileOne: React.FC<CreateProfileFormProps> = ({
               />
             </svg>
           </button>
-          <p className="m-2 text-sm text-muted-foreground">
+          <p className="m-2 text-sm text-foreground">
             Click here to Submit
           </p>
         </div>
