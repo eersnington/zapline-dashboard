@@ -23,8 +23,11 @@ export const UserConfig = z
 
 export const UserBot = z
   .object({
-    myshopify: z.string(),
-    app_token: z.string(),
+    id: z.number(),
+    userId: z.string(),
+    phone_number: z.string(),
+    myshopify: z.string().nullable(),
+    app_token: z.string().nullable(),
     refund_accept: z.string(),
     refund_window: z.string().nullable(),
   })

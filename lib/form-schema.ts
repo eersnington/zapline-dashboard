@@ -45,7 +45,7 @@ export const integrationSchema = z.object({
   ),
   app_token: z.string().min(20, { message: "Please enter a valid API key" }),
   refund_accept: z.enum(["enabled", "disabled"]),
-  refund_window: z.string().min(1, { message: "Please enter a valid number" }),
+  refund_window: z.string().min(1, { message: "Please enter as Integer (in days)" }),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;
