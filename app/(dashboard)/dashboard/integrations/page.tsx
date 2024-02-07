@@ -5,8 +5,12 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { UpdateIntegrationForm } from "@/components/forms/integrations-form";
+import { IntegrationFormValues } from "@/lib/form-schema";
 
-const breadcrumbItems = [{ title: "Integrations", link: "/dashboard/integrations" }];
+const breadcrumbItems = [
+  { title: "Integrations", link: "/dashboard/integrations" },
+];
 export default async function page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -15,19 +19,32 @@ export default async function page() {
     redirect("/");
   }
 
-  const userProfile = await db.profile.findFirst({
-    where: {
-      userId: user?.id,
-    },
-  });
-
   const userBot = await db.bot.findFirst({
     where: {
       userId: user?.id,
     },
   });
 
-  async function updateBot() {}
+  async function updateBot(data: IntegrationFormValues) {
+    "use server";
+    try {
+      await db.bot
+        .update({
+          where: {
+            userId: user?.id,
+          },
+          data: {
+            ...data,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
+  }
 
   return (
     <ScrollArea className="h-full">
@@ -42,6 +59,11 @@ export default async function page() {
         <h1 className="text-foreground font-bold text-lg my-2">
           Shopify Information
         </h1>
+
+        <UpdateIntegrationForm
+          updateIntegration={updateBot}
+          defaultValues={userBot}
+        />
       </div>
     </ScrollArea>
   );
