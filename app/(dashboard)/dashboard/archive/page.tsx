@@ -35,19 +35,23 @@ export default async function page({ searchParams }: paramsProps) {
         <div className="flex items-start justify-between">
           <Heading
             title={`Call Archive (${totalUsers})`}
-            description="View all calls made by your bot. *Coming Soon*"
+            description="View all calls made by your bot."
           />
         </div>
         <Separator />
 
-        <EmployeeTable
+        <h1 className="text-2xl font-light text-center items-center text-foreground/70">
+          {"**Coming Soon**"}
+        </h1>
+
+        {/* <EmployeeTable
           searchKey="country"
           pageNo={page}
           columns={columns}
           totalUsers={totalUsers}
           data={employee}
           pageCount={pageCount}
-        />
+        /> */}
       </div>
     </>
   );
