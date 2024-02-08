@@ -12,11 +12,19 @@ function getBaseUrl(): string {
 }
 
 export const Api = {
-  async get(endpoint: string): Promise<any> {
+  async get(endpoint: string, payload: ApiRequest | null): Promise<any> {
     try {
       const baseUrl = getBaseUrl();
-      const response = await axios.get(`${baseUrl}/${endpoint}`);
-      return response.data;
+      if (payload) {
+        const data = apiRequestValidator.parse(payload);
+        const response = await axios.get(`${baseUrl}/${endpoint}`, {
+          data: data,
+        });
+        return response.data;
+      } else {
+        const response = await axios.get(`${baseUrl}/${endpoint}`);
+        return response.data;
+      }
     } catch (error) {
       throw error;
     }
