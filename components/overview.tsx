@@ -36,7 +36,6 @@ export function Overview({ weeklyMetrics = {} }) {
       };
     });
   };
-  console.log(get_data());
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={get_data()}>
