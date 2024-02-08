@@ -1,6 +1,6 @@
 import { CreateBotConfigForm } from "@/components/forms/create-config-form";
 import { CreateProfileForm } from "@/components/forms/create-profile-form";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
@@ -17,6 +17,16 @@ export default async function page() {
 
   if (!user?.id || !user?.email) {
     redirect("/");
+  }
+
+  const userProfile = await db.profile.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  if (userProfile) {
+    redirect("/dashboard/");
   }
 
   const dbUser = await db.user.findFirst({
@@ -36,6 +46,14 @@ export default async function page() {
 
     //create bot in db
     Api.post("phone/buy", { user_id: new_user.id })
+      .then((res) => {
+        console.log(res);
+        Api.get("bots/add", {
+          user_id: user?.id,
+        }).catch((err) => {
+          console.log(err);
+        });
+      })
       .catch((err) => {
         console.log(err);
       });
