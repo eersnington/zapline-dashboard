@@ -20,11 +20,11 @@ interface WeeklyMetrics {
   };
 }
 
-interface Props {
+interface WeeklyMetricsProps {
   weeklyMetrics: WeeklyMetrics;
 }
 
-export function Overview({ weeklyMetrics = {} }) {
+export function Overview({ weeklyMetrics }: WeeklyMetricsProps) {
   const get_data = () => {
     return Object.entries(weeklyMetrics).map(([date, metrics]) => {
       const metrics_dict: any = metrics;
@@ -44,8 +44,8 @@ export function Overview({ weeklyMetrics = {} }) {
         <Tooltip />
         <Legend />
         <Bar dataKey="total_calls" fill="#f97316" />
-        <Bar dataKey="automated_calls" fill="#967bb6" />
-        <Bar dataKey="transferred_calls" fill="#FDE767" />
+        <Bar dataKey="automated_calls" fill="#38bdf8" />
+        <Bar dataKey="transferred_calls" fill="#facc15" />
       </BarChart>
     </ResponsiveContainer>
   );
