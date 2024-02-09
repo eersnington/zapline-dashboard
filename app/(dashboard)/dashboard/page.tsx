@@ -60,17 +60,20 @@ export default async function page() {
           transferred_calls: 3,
         },
       },
+      recent_metrics: [["No recent calls", "N/A"]],
     };
   });
 
-  const weekly_total = ()=>{
+  const weekly_total = () => {
     var sum = 0;
-    for (const [date, metrics] of Object.entries(call_stats["weekly_metrics"])) {
+    for (const [date, metrics] of Object.entries(
+      call_stats["weekly_metrics"],
+    )) {
       const metrics_dict: any = metrics;
       sum += metrics_dict.total_calls;
     }
     return sum;
-  }
+  };
 
   return (
     <ScrollArea className="h-full">
@@ -182,7 +185,7 @@ export default async function page() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentCalls />
+                  <RecentCalls calls={call_stats["recent_metrics"]}/>
                 </CardContent>
               </Card>
             </div>
