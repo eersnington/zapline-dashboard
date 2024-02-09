@@ -43,9 +43,9 @@ export function Overview({ weeklyMetrics }: WeeklyMetricsProps) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="total_calls" fill="#f97316" />
-        <Bar dataKey="automated_calls" fill="#38bdf8" />
-        <Bar dataKey="transferred_calls" fill="#facc15" />
+        <Bar dataKey="total_calls" fill="#2563eb" />
+        <Bar dataKey="automated_calls" fill="#22d3ee" />
+        <Bar dataKey="transferred_calls" fill="#f59e0b" />
       </BarChart>
     </ResponsiveContainer>
   );
