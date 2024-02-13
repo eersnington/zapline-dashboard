@@ -185,7 +185,7 @@ export default async function page() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RecentCalls calls={call_stats["recent_metrics"]}/>
+                  <RecentCalls calls={call_stats["recent_metrics"]} />
                 </CardContent>
               </Card>
             </div>
