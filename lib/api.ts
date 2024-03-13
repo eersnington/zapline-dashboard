@@ -7,8 +7,8 @@ dotenv.config();
 function getBaseUrl(): string {
   const mode = process.env.MODE || "production";
   return mode === "development"
-    ? "http://localhost:5000"
-    : "https://production-api.com";
+    ? "http://0.0.0.0:5005"
+    : "https://zaplineapi.cloud";
 }
 
 export const Api = {
