@@ -131,7 +131,7 @@ export default async function page() {
             {" "}
             Customize how the bot handles various scenarios.{" "}
             <br className="hidden md:block" />
-            1. Specify a transfer number for situations beyond the bot's
+            1. Specify a transfer number for situations beyond the bot&apos;s
             capabilities. {"(Not Required)"}
             <br className="hidden md:block" />
             2. Toggle fallback mode to direct calls to voicemail when no live
@@ -142,7 +142,7 @@ export default async function page() {
           <CreateBotConfigForm createConfig={createConfig} />
           <Separator />
           <p className="text-foreground text-md">
-            Once you've completed the form, you can start using the bot.{" "}
+            Once you&apos;ve completed the form, you can start using the bot.{" "}
           </p>
           <Link
             className={buttonVariants({
