@@ -1,4 +1,6 @@
-## Overview
+# ZaplineAI 
+
+# Overview
 
 ZaplineAI Dashboard using the following stack:
 
