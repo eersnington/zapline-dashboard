@@ -4,11 +4,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
-import { ConfigFormValues, ProfileFormValues } from "@/lib/form-schema";
+import { ConfigFormValues, IntegrationFormValues, ProfileFormValues } from "@/lib/form-schema";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Api } from "@/lib/api";
+import { UpdateIntegrationForm } from "@/components/forms/integrations-form";
 
 export default async function page() {
   const { getUser } = getKindeServerSession();
@@ -105,6 +106,27 @@ export default async function page() {
     return null;
   }
 
+  async function updateBot(data: IntegrationFormValues) {
+    "use server";
+    try {
+      await db.bot
+        .update({
+          where: {
+            userId: user?.id,
+          },
+          data: {
+            ...data,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
+  }
+
   return (
     <>
       <div className="space-y-4 p-4 md:p-8 pt-6">
@@ -138,8 +160,20 @@ export default async function page() {
             call representative is available, and set a fallback email to
             receive the voicemail transcriptions in such instances.{" "}
           </p>
-          <Separator />
           <CreateBotConfigForm createConfig={createConfig} />
+          <Separator />
+          <Heading title="Step 3 - Connect to Shopify" description="" />
+          <p className="text-foreground text-md">
+            Connect your bot to Shopify to automate order tracking, customer
+            support, and more.{" "}
+            <br className="hidden md:block" />
+            Enter your Shopify store name and API key to enable the bot to
+            access your store&apos;s data.
+          </p>
+          <UpdateIntegrationForm
+            updateIntegration={updateBot}
+            defaultValues={userProfile}
+          />
           <Separator />
           <p className="text-foreground text-md">
             Once you&apos;ve completed the form, you can start using the bot.{" "}
