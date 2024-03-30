@@ -9,7 +9,7 @@ import {
 export default function UserAuthForm() {
   return (
     <>
-      <LoginLink>
+      <LoginLink postLoginRedirectURL="/dashboard">
         <Button className="ml-auto w-full">Sign In</Button>
       </LoginLink>
       <div className="relative">
