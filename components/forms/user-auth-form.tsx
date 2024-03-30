@@ -22,7 +22,7 @@ export default function UserAuthForm() {
           </span>
         </div>
       </div>
-      <RegisterLink>
+      <RegisterLink postLoginRedirectURL="/welcome">
         <Button className="ml-auto w-full">Sign Up</Button>
       </RegisterLink>
     </>
