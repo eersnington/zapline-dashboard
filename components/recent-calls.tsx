@@ -17,7 +17,7 @@ export function RecentCalls({ calls }: RecentCallsProps) {
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none">{call[0]}</p>
             <p className="text-sm text-muted-foreground">
-              {call[1] === "automated" ? "Product Info" : "Sales"}
+              {call[2]}
             </p>
           </div>
           <div className="ml-auto font-medium">
