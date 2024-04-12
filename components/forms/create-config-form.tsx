@@ -23,18 +23,24 @@ import {
   SelectValue,
 } from "../ui/select";
 import { UserConfigSchema } from "@/lib/function-schema";
+import { useRouter } from "next/navigation";
 
 interface CreateConfigFormProps {
   createConfig: (data: ConfigFormValues) => Promise<null>;
   defaultValues?: Partial<UserConfigSchema>;
+  setup?: boolean;
 }
 
 export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
   createConfig,
   defaultValues = {},
+  setup = false,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const mapUserConfigToDefaultValues = (
     config: CreateConfigFormProps["defaultValues"],
@@ -63,13 +69,17 @@ export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
   });
 
   const processForm: SubmitHandler<ConfigFormValues> = (data) => {
+    if (setup) {
+      setIsSubmitting(true);
+    }
     setData(data);
     // api call and reset
     // form.reset();
     createConfig(data);
+    if (setup) {
+      router.push("/welcome/step3");
+    }
   };
-
-  console.log(JSON.stringify(form.watch(), null, 2));
 
   type FieldName = keyof ConfigFormValues;
 
@@ -162,7 +172,7 @@ export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
                   name="transferNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Transfer Number {"(Not Required)"}</FormLabel>
+                      <FormLabel>Transfer Number {"(Required)"}</FormLabel>
                       <FormControl>
                         <Input
                           disabled={false}
@@ -242,8 +252,8 @@ export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
                 <h1 className="font-bold text-green-600">Completed</h1>
                 <pre className="whitespace-pre-wrap">
                   {data &&
-                  typeof data === "object" &&
-                  Object.keys(data).length > 0 ? (
+                    typeof data === "object" &&
+                    Object.keys(data).length > 0 ? (
                     Object.entries(data).map(([key, value]) => (
                       <p key={key}>
                         <strong>{key}:</strong> {value}
@@ -256,6 +266,9 @@ export const CreateBotConfigForm: React.FC<CreateConfigFormProps> = ({
               </div>
             )}
           </div>
+          {isSubmitting && (
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-400"></div>
+          )}
         </form>
       </Form>
 
