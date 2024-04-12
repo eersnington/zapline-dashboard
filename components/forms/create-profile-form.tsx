@@ -21,20 +21,26 @@ import { profileSchema, type ProfileFormValues } from "@/lib/form-schema";
 import { UserProfileSchema } from "@/lib/function-schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { use, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 interface CreateProfileFormProps {
   createProfile: (data: ProfileFormValues) => Promise<null>;
   defaultValues?: Partial<UserProfileSchema>;
+  setup?: boolean;
 }
 
 export const CreateProfileForm: React.FC<CreateProfileFormProps> = ({
   createProfile,
   defaultValues = {},
+  setup = false,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const mapUserProfileToDefaultValues = (
     profile: CreateProfileFormProps["defaultValues"],
@@ -57,10 +63,20 @@ export const CreateProfileForm: React.FC<CreateProfileFormProps> = ({
   });
 
   const processForm: SubmitHandler<ProfileFormValues> = (data) => {
+    if (setup) {
+      setIsSubmitting(true);
+    }
     setData(data);
-    // api call and reset
-    // form.reset();
-    createProfile(data);
+    try {
+      // api call and reset
+      // form.reset();
+      createProfile(data);
+      if (setup) {
+        router.push("/welcome/step2");
+      }
+    } catch (error) {
+      console.error("Failed to create profile:", error);
+    }
   };
 
   type FieldName = keyof ProfileFormValues;
@@ -240,8 +256,8 @@ export const CreateProfileForm: React.FC<CreateProfileFormProps> = ({
                 <h1 className="font-bold text-green-600">Completed</h1>
                 <pre className="whitespace-pre-wrap">
                   {data &&
-                  typeof data === "object" &&
-                  Object.keys(data).length > 0 ? (
+                    typeof data === "object" &&
+                    Object.keys(data).length > 0 ? (
                     Object.entries(data).map(([key, value]) => (
                       <p key={key}>
                         <strong>{key}:</strong> {value}
@@ -254,6 +270,9 @@ export const CreateProfileForm: React.FC<CreateProfileFormProps> = ({
               </div>
             )}
           </div>
+          {isSubmitting && (
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-400"></div>
+          )}
         </form>
       </Form>
       {/* Navigation */}
