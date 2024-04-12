@@ -21,20 +21,26 @@ import { integrationSchema, IntegrationFormValues } from "@/lib/form-schema";
 import { UserBotSchema } from "@/lib/function-schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface UpdateIntegrationFormProps {
   updateIntegration: (data: IntegrationFormValues) => Promise<null>;
   defaultValues?: Partial<UserBotSchema>;
+  setup?: boolean;
 }
 
 export const UpdateIntegrationForm: React.FC<UpdateIntegrationFormProps> = ({
   updateIntegration,
   defaultValues = {},
+  setup = false,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const mapUserBotToDefaultValues = (
     bot: UpdateIntegrationFormProps["defaultValues"],
@@ -66,10 +72,16 @@ export const UpdateIntegrationForm: React.FC<UpdateIntegrationFormProps> = ({
   });
 
   const processForm: SubmitHandler<IntegrationFormValues> = (data) => {
+    if (setup) {
+      setIsSubmitting(true);
+    }
     setData(data);
     // api call and reset
     // form.reset();
     updateIntegration(data);
+    if (setup) {
+      router.push("/dashboard/");
+    }
   };
 
   type FieldName = keyof IntegrationFormValues;
@@ -255,8 +267,8 @@ export const UpdateIntegrationForm: React.FC<UpdateIntegrationFormProps> = ({
                 <h1 className="font-bold text-green-600">Completed</h1>
                 <pre className="whitespace-pre-wrap">
                   {data &&
-                  typeof data === "object" &&
-                  Object.keys(data).length > 0 ? (
+                    typeof data === "object" &&
+                    Object.keys(data).length > 0 ? (
                     Object.entries(data).map(([key, value]) => (
                       <p key={key}>
                         <strong>{key}:</strong> {value}
@@ -269,6 +281,9 @@ export const UpdateIntegrationForm: React.FC<UpdateIntegrationFormProps> = ({
               </div>
             )}
           </div>
+          {isSubmitting && (
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-400"></div>
+          )}
         </form>
       </Form>
       {/* Navigation */}
