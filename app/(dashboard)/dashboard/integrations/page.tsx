@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UpdateIntegrationForm } from "@/components/forms/integrations-form";
 import { IntegrationFormValues } from "@/lib/form-schema";
+import { Api } from "@/lib/api";
 
 const breadcrumbItems = [
   { title: "Integrations", link: "/dashboard/integrations" },
@@ -28,18 +29,36 @@ export default async function page() {
   async function updateBot(data: IntegrationFormValues) {
     "use server";
     try {
-      await db.bot
-        .update({
-          where: {
-            userId: user?.id,
-          },
-          data: {
-            ...data,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        });
+      if (user) {
+        if (userBot === null) {
+          console.log("Creating bot")
+          await Api.post("phone/buy", { user_id: user?.id })
+            .then((res) => {
+              console.log(res);
+              Api.get("bots/add", {
+                user_id: user?.id,
+              }).catch((err) => {
+                console.log(err);
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          console.log("Bot created successfully");
+        }
+        await db.bot
+          .update({
+            where: {
+              userId: user?.id,
+            },
+            data: {
+              ...data,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          });
+      }
     } catch (error) {
       console.log(error);
     }
