@@ -30,8 +30,34 @@ export default async function page() {
     },
   });
 
+  const userProfile = await db.profile.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  const userConfig = await db.config.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  const userBot = await db.bot.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
   if (user === null) {
     redirect("/welcome");
+  }
+
+  if (userProfile === null) {
+    redirect("/welcome/step1");
+  }
+
+  if (userConfig === null) {
+    redirect("/welcome/step2");
   }
 
   const bot_phone_number = await db.bot.findFirst({
@@ -86,7 +112,11 @@ export default async function page() {
             <Badge className="text-sm bg-orange-500 text-white">
               Bot Phone Number: {bot_phone_number?.phone_no}
             </Badge>
-
+            {userBot?.userId == null && (
+              <Badge className="text-sm bg-yellow-500 text-white">
+                Please complete Integration with Shopify
+              </Badge>
+            )}
             <CalendarDateRangePicker />
             <Button>Download</Button>
           </div>
