@@ -32,7 +32,7 @@ export default async function page() {
     });
 
     if (!dbUser) {
-        const new_user = await db.user.create({
+        await db.user.create({
             data: {
                 id: user.id,
                 email: user.email,
