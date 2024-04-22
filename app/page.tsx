@@ -41,14 +41,14 @@ export default function AuthenticationPage() {
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking Sign Up, you agree to our{" "}
             <Link
-              href="/terms"
+              href="https://zaplineai.cloud/terms"
               className="underline underline-offset-4 hover:text-primary"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
-              href="/privacy"
+              href="https://zaplineai.cloud/privacy"
               className="underline underline-offset-4 hover:text-primary"
             >
               Privacy Policy
