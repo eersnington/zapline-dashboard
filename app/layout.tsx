@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from 'next/script'
 import ThemeProvider from "@/components/layout/ThemeToggle/theme-provider";
 import "./globals.css";
 
@@ -19,8 +20,8 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
-        <script
-          defer
+        <Script
+          async
           src="https://analytics.us.umami.is/script.js"
           data-website-id="1dcb1531-dee1-4be3-b4e6-c849d291f35e" />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
