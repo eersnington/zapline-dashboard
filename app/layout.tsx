@@ -22,8 +22,10 @@ export default async function RootLayout({
       <body className={`${inter.className}`}>
         <Script
           async
-          src="https://analytics.us.umami.is/script.js"
-          data-website-id="1dcb1531-dee1-4be3-b4e6-c849d291f35e" />
+          defer
+          src="https://us.umami.is/script.js"
+          data-website-id="1dcb1531-dee1-4be3-b4e6-c849d291f35e"
+          data-domains="zaplineai.cloud" />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Toaster />
           {children}
