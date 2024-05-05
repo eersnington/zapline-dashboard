@@ -2,8 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ThemeProvider from "@/components/layout/ThemeToggle/theme-provider";
-import posthog from 'posthog-js'
-import { PostHogProvider } from 'posthog-js/react'
+import { PHProvider } from "./providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,12 +20,12 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
-        <PostHogProvider client={posthog}>
+        <PHProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster />
             {children}
           </ThemeProvider>
-        </PostHogProvider>
+        </PHProvider>
       </body>
     </html>
   );
