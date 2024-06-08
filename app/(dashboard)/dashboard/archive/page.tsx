@@ -1,4 +1,5 @@
 import BreadCrumb from "@/components/breadcrumb";
+import CallRecordings from "@/components/call-archive";
 import { columns } from "@/components/tables/employee-tables/columns";
 import { EmployeeTable } from "@/components/tables/employee-tables/employee-table";
 import { Heading } from "@/components/ui/heading";
@@ -13,6 +14,15 @@ type paramsProps = {
   };
 };
 
+const generateRandomDate = (start: Date, end: Date): Date => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+};
+
+const recordings = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  date: generateRandomDate(new Date(2024, 0, 1), new Date()),
+}));
+
 export default async function page({ searchParams }: paramsProps) {
   const page = Number(searchParams.page) || 1;
   const pageLimit = Number(searchParams.limit) || 10;
@@ -21,7 +31,7 @@ export default async function page({ searchParams }: paramsProps) {
 
   const res = await fetch(
     `https://api.slingacademy.com/v1/sample-data/users?offset=${offset}&limit=${pageLimit}` +
-      (country ? `&search=${country}` : ""),
+    (country ? `&search=${country}` : ""),
   );
   const employeeRes = await res.json();
   const totalUsers = employeeRes.total_users; //1000
@@ -34,24 +44,12 @@ export default async function page({ searchParams }: paramsProps) {
 
         <div className="flex items-start justify-between">
           <Heading
-            title={`Call Archive (${totalUsers})`}
+            title={`Call Archive (342)`}
             description="View all calls made by your bot."
           />
         </div>
         <Separator />
-
-        <h1 className="text-2xl font-light text-center items-center text-foreground/70">
-          {"**Coming Soon**"}
-        </h1>
-
-        {/* <EmployeeTable
-          searchKey="country"
-          pageNo={page}
-          columns={columns}
-          totalUsers={totalUsers}
-          data={employee}
-          pageCount={pageCount}
-        /> */}
+        <CallRecordings recordings={recordings} />
       </div>
     </>
   );
