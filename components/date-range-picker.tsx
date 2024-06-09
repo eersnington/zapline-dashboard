@@ -14,6 +14,8 @@ export function CalendarDateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -25,7 +27,7 @@ export function CalendarDateRangePicker({
             className={cn("w-[260px] text-center font-normal")}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {currentDate.toDateString()}
+            {formattedDate}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="end">
@@ -34,7 +36,7 @@ export function CalendarDateRangePicker({
             mode="single"
             defaultMonth={currentDate}
             selected={currentDate}
-            onSelect={() => {}}
+            onSelect={() => { }}
           />
         </PopoverContent>
       </Popover>

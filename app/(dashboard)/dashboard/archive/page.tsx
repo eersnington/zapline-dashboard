@@ -5,6 +5,10 @@ import { EmployeeTable } from "@/components/tables/employee-tables/employee-tabl
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Employee } from "@/constants/data";
+import { Api } from "@/lib/api";
+import { db } from "@/lib/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
 const breadcrumbItems = [{ title: "Call Archive", link: "/dashboard/archive" }];
 
@@ -37,6 +41,44 @@ export default async function page({ searchParams }: paramsProps) {
   const totalUsers = employeeRes.total_users; //1000
   const pageCount = Math.ceil(totalUsers / pageLimit);
   const employee: Employee[] = employeeRes.users;
+
+  const { getUser } = getKindeServerSession();
+
+  const kinde_user = await getUser();
+
+  const user = await db.user.findFirst({
+    where: {
+      id: kinde_user?.id,
+    },
+  });
+
+  if (user === null) {
+    redirect("/welcome");
+  }
+
+  const call_stats = await Api.get("metrics/get", {
+    user_id: user?.id,
+  }).catch((err) => {
+    return {
+      total_metrics: {
+        total_calls: "None",
+        total_automated_calls: "None",
+        total_transferred_calls: "None",
+        total_abandoned_calls: "None",
+        automated_call_rate: "None",
+        transferred_call_rate: "None",
+        abandoned_call_rate: "None",
+      },
+      weekly_metrics: {
+        "2024-01-01": {
+          total_calls: 5,
+          automated_calls: 4,
+          transferred_calls: 3,
+        },
+      },
+      recent_metrics: [["No recent calls", "N/A"]],
+    };
+  });
   return (
     <>
       <div className="flex-1 space-y-4  p-4 md:p-8 pt-6">
@@ -44,7 +86,7 @@ export default async function page({ searchParams }: paramsProps) {
 
         <div className="flex items-start justify-between">
           <Heading
-            title={`Call Archive (342)`}
+            title={`Call Archive (${call_stats.total_metrics.total_calls})`}
             description="View all calls made by your bot."
           />
         </div>
