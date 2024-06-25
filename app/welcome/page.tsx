@@ -29,6 +29,23 @@ export default async function page() {
         email: user.email,
       },
     });
+
+    await db.callStats.create({
+      data: {
+        user_id: user.id,
+        total_calls: 0,
+        total_automated: 0,
+        total_transferred: 0,
+        total_abandoned: 0,
+      },
+    });
+
+    await db.call_logs.create({
+      data: {
+        user_id: user.id,
+        call_data: JSON.stringify([]),
+      },
+    });
   }
 
   return (
