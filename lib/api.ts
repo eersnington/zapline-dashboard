@@ -8,7 +8,7 @@ function getBaseUrl(): string {
   const mode = process.env.MODE || "production";
   return mode === "development"
     ? "http://0.0.0.0:5005"
-    : "https://zaplineapi.cloud";
+    : "https://zapline-webapp-server-8k2j.onrender.com";
 }
 
 export const Api = {

@@ -15,13 +15,13 @@ export function RecentCalls({ calls }: RecentCallsProps) {
             <Icons.phoneForward className="h-6 w-6 text-muted-foreground" />
           )}
           <div className="ml-4 space-y-1">
-            <p className="text-sm font-medium leading-none">{call[0]}</p>
+            <p className="text-sm font-medium leading-none">{call[1]}</p>
             <p className="text-sm text-muted-foreground">
               {call[2]}
             </p>
           </div>
           <div className="ml-auto font-medium">
-            {call[1] === "automated" ? "Automated" : "Transferred"}
+            {call[0] === "automated" ? "Automated" : "Transferred"}
           </div>
         </div>
       ))}

@@ -26,7 +26,13 @@ interface WeeklyMetricsProps {
 
 export function Overview({ weeklyMetrics }: WeeklyMetricsProps) {
   const get_data = () => {
-    return Object.entries(weeklyMetrics).map(([date, metrics]) => {
+    // Sort the entries based on the date key
+    const sortedEntries = Object.entries(weeklyMetrics).sort(([date1], [date2]) => {
+      return new Date(date1).getTime() - new Date(date2).getTime();
+    });
+
+    // Map the sorted entries to the desired format
+    return sortedEntries.map(([date, metrics]) => {
       const metrics_dict: any = metrics;
       return {
         name: date,
@@ -36,6 +42,7 @@ export function Overview({ weeklyMetrics }: WeeklyMetricsProps) {
       };
     });
   };
+
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={get_data()}>

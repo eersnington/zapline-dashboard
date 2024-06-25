@@ -3,6 +3,7 @@ import Link from "next/link";
 import UserAuthForm from "@/components/forms/user-auth-form";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import axios from "axios";
 
 export const metadata: Metadata = {
   title: "ZaplineAI - Login",
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default function AuthenticationPage() {
+  axios.get("https://zapline-webapp-server-8k2j.onrender.com/healthz").then((res) => {
+    console.log("Fetched Backend Server");
+  });
   return (
     <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <Link
