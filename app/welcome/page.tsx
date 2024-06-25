@@ -29,7 +29,15 @@ export default async function page() {
         email: user.email,
       },
     });
+  }
 
+  const dbCallStats = await db.callStats.findFirst({
+    where: {
+      user_id: user.id,
+    },
+  });
+
+  if (!dbCallStats) {
     await db.callStats.create({
       data: {
         user_id: user.id,
